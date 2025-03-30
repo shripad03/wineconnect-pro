@@ -1,7 +1,9 @@
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { wineries, wines, Winery, Wine } from '@/data/mockData';
+import { useQuery } from '@tanstack/react-query';
+import { wineryApi, wineApi } from '@/services/api';
+import { IWinery, IWine } from '@/api/types';
 import Layout from '@/components/layout/Layout';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import WineGrid from '@/components/wines/WineGrid';
@@ -10,22 +12,32 @@ import { MapPin, Calendar, Mail, Phone, Globe, ExternalLink } from 'lucide-react
 
 const WineryPage = () => {
   const { id } = useParams<{ id: string }>();
-  const [winery, setWinery] = useState<Winery | null>(null);
-  const [wineryWines, setWineryWines] = useState<Wine[]>([]);
   
-  useEffect(() => {
-    if (id) {
-      const foundWinery = wineries.find(w => w.id === id);
-      setWinery(foundWinery || null);
-      
-      if (foundWinery) {
-        const relatedWines = wines.filter(wine => wine.wineryId === foundWinery.id);
-        setWineryWines(relatedWines);
-      }
-    }
-  }, [id]);
+  // Fetch winery data
+  const { data: winery, isLoading: isLoadingWinery, error: wineryError } = useQuery({
+    queryKey: ['winery', id],
+    queryFn: () => (id ? wineryApi.getById(id) : Promise.reject("No ID provided")),
+    enabled: !!id,
+  });
   
-  if (!winery) {
+  // Fetch wines for this winery
+  const { data: wines = [], isLoading: isLoadingWines } = useQuery({
+    queryKey: ['wines', 'winery', id],
+    queryFn: () => (id ? wineApi.getByWinery(id) : Promise.reject("No ID provided")),
+    enabled: !!id,
+  });
+  
+  if (isLoadingWinery) {
+    return (
+      <Layout>
+        <div className="container mx-auto px-4 py-16 text-center">
+          <p className="text-gray-600">Loading winery information...</p>
+        </div>
+      </Layout>
+    );
+  }
+  
+  if (wineryError || !winery) {
     return (
       <Layout>
         <div className="container mx-auto px-4 py-16 text-center">
@@ -107,8 +119,12 @@ const WineryPage = () => {
               <h2 className="text-2xl font-serif font-semibold text-wine-900 mb-6 text-center">
                 Wines from {winery.name}
               </h2>
-              {wineryWines.length > 0 ? (
-                <WineGrid wines={wineryWines} />
+              {isLoadingWines ? (
+                <div className="text-center py-12">
+                  <p className="text-gray-600">Loading wines...</p>
+                </div>
+              ) : wines.length > 0 ? (
+                <WineGrid wines={wines} />
               ) : (
                 <div className="text-center py-12">
                   <p className="text-gray-600">No wines available from this winery at the moment.</p>

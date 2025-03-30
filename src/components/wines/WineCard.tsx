@@ -1,14 +1,14 @@
 
 import { Link } from 'react-router-dom';
-import { Wine } from '@/data/mockData';
+import { IWine } from '@/api/types';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { StarIcon, ShoppingCart } from 'lucide-react';
 
 interface WineCardProps {
-  wine: Wine;
-  onAddToCart: (wine: Wine) => void;
+  wine: IWine;
+  onAddToCart: (wine: IWine) => void;
 }
 
 const WineCard = ({ wine, onAddToCart }: WineCardProps) => {

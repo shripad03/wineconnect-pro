@@ -1,38 +1,43 @@
-
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { wines, Wine } from '@/data/mockData';
+import { useQuery } from '@tanstack/react-query';
+import { wineApi } from '@/services/api';
+import { IWine } from '@/api/types';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { QrCode, ShoppingCart, Truck, Shield, Star, ChevronLeft, Info } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useState } from 'react';
 import { useToast } from '@/components/ui/use-toast';
 import WineGrid from '@/components/wines/WineGrid';
 
 const WineDetailPage = () => {
   const { id } = useParams<{ id: string }>();
-  const [wine, setWine] = useState<Wine | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
-  const [relatedWines, setRelatedWines] = useState<Wine[]>([]);
   const { toast } = useToast();
   
-  useEffect(() => {
-    if (id) {
-      const foundWine = wines.find(w => w.id === id);
-      setWine(foundWine || null);
-      
-      if (foundWine) {
-        // Find wines from the same winery or of the same type
-        const related = wines.filter(w => 
-          w.id !== foundWine.id && 
-          (w.wineryId === foundWine.wineryId || w.type === foundWine.type)
-        ).slice(0, 3);
-        
-        setRelatedWines(related);
-      }
-    }
-  }, [id]);
+  // Fetch wine details
+  const { data: wine, isLoading: isLoadingWine, error: wineError } = useQuery({
+    queryKey: ['wine', id],
+    queryFn: () => (id ? wineApi.getById(id) : Promise.reject("No ID provided")),
+    enabled: !!id,
+  });
+  
+  // Fetch related wines when wine data is available
+  const { data: relatedWines = [] } = useQuery({
+    queryKey: ['wines', 'related', wine?.wineryId, wine?.type],
+    queryFn: () => {
+      if (!wine) return Promise.resolve([]);
+      // Get wines from the same winery or of the same type
+      return wineApi.filter({ 
+        wineryId: wine.wineryId, 
+        type: wine.type,
+        exclude: wine.id 
+      });
+    },
+    enabled: !!wine,
+  });
   
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
@@ -52,7 +57,17 @@ const WineDetailPage = () => {
     }
   };
   
-  if (!wine) {
+  if (isLoadingWine) {
+    return (
+      <Layout>
+        <div className="container mx-auto px-4 py-16 text-center">
+          <p className="text-gray-600">Loading wine details...</p>
+        </div>
+      </Layout>
+    );
+  }
+  
+  if (wineError || !wine) {
     return (
       <Layout>
         <div className="container mx-auto px-4 py-16 text-center">

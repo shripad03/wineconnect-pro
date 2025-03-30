@@ -1,4 +1,3 @@
-
 export interface IWine {
   id: string;
   name: string;
@@ -16,6 +15,7 @@ export interface IWine {
   available: boolean;
   stockQuantity: number;
   imageUrl: string;
+  tags: string[]; // Added tags property
 }
 
 export interface IWinery {

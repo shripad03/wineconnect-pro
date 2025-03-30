@@ -1,17 +1,17 @@
 
 import { useState } from 'react';
-import { Wine } from '@/data/mockData';
+import { IWine } from '@/api/types';
 import WineCard from './WineCard';
 import { useToast } from '@/components/ui/use-toast';
 
 interface WineGridProps {
-  wines: Wine[];
+  wines: IWine[];
 }
 
 const WineGrid = ({ wines }: WineGridProps) => {
   const { toast } = useToast();
 
-  const handleAddToCart = (wine: Wine) => {
+  const handleAddToCart = (wine: IWine) => {
     toast({
       title: "Added to Cart",
       description: `${wine.name} has been added to your cart.`,
