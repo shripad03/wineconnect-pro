@@ -1,12 +1,54 @@
 
 import { Link } from 'react-router-dom';
-import { wines } from '@/data/mockData';
+import { useQuery } from '@tanstack/react-query';
+import { wineApi } from '@/services/api';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { StarIcon } from 'lucide-react';
+import { StarIcon, Loader2 } from 'lucide-react';
 
 const FeaturedWines = () => {
+  const { data: wines = [], isLoading, error } = useQuery({
+    queryKey: ['wines'],
+    queryFn: wineApi.getAll,
+  });
+
+  if (isLoading) {
+    return (
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-between items-center mb-10">
+            <h2 className="text-3xl font-serif font-bold text-wine-900">Featured Wines</h2>
+            <Link to="/wines" className="text-wine-700 hover:text-wine-900 font-medium">
+              View All
+            </Link>
+          </div>
+          <div className="flex justify-center py-12">
+            <Loader2 className="h-8 w-8 animate-spin text-wine-700" />
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-between items-center mb-10">
+            <h2 className="text-3xl font-serif font-bold text-wine-900">Featured Wines</h2>
+            <Link to="/wines" className="text-wine-700 hover:text-wine-900 font-medium">
+              View All
+            </Link>
+          </div>
+          <div className="text-center py-8">
+            <p className="text-gray-600">Unable to load featured wines. Please try again later.</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   const featuredWines = wines.filter(wine => wine.available).slice(0, 4);
 
   return (
