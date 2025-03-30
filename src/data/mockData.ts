@@ -37,8 +37,8 @@ export const wineries: Winery[] = [
     id: 'winery-1',
     name: 'Sula Vineyards',
     description: 'India\'s largest wine producer, known for pioneering wine production in Nashik and introducing Indians to wine culture.',
-    logoUrl: 'https://source.unsplash.com/random/200x200/?winery,logo',
-    coverImageUrl: 'https://source.unsplash.com/random/1200x400/?vineyard,india',
+    logoUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ55VA6Thc7AVlCEIi0Nahmg9oBh3Tm9h6mMw&s',
+    coverImageUrl: 'https://storage.googleapis.com/goa-app-12a91.appspot.com/2024-08-12T12%3A07%3A27.947Zsula1.webp?GoogleAccessId=firebase-adminsdk-zeqcj%40goa-app-12a91.iam.gserviceaccount.com&Expires=16447017600&Signature=TWSdqbRtxOFdvkN%2FIzaLOJnd9JuV8pNwpOFVbRi0yHLL1b%2FfjNmxlGE1k5TjQ6BiAz4tpAA0zIhK7zQykO%2FOyXWI48G9ROPRqRQywkTuteuYNYk2lyxAGMBmDfEbk39kMJcgXv%2BmiMMJHrTq5QjWYKILe%2Br7XsgIuaM3%2FUSGYaMjSTYz1id%2BbwRbYqkw5ChvY%2FharQ7vBJN3yL%2BvATUB7X9YZF24cofbUig1iaBLd9rDSiKLLGtpbBh6RJgq40K8UTAHmybTNn%2FdZVulzrhrzBf7yQQemBJ72M%2BBzwCGP1oUN9mW4ztDrOPUBbicNrWtddY3KLSiVkiX%2B8inZSisfA%3D%3D',
     location: {
       region: 'Nashik',
       country: 'India'

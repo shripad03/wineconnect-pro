@@ -38,11 +38,11 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-medium mb-4">Contact Us</h4>
             <address className="not-italic text-gray-300 text-sm">
-              <p>Nashik Wine Park</p>
+              <p>Wine Connect</p>
               <p>Nashik, Maharashtra</p>
               <p>India - 422003</p>
               <p className="mt-2">Email: info@wineconnect.pro</p>
-              <p>Phone: +91 12345 67890</p>
+              <p>Phone: +91 98230 00000</p>
             </address>
           </div>
         </div>

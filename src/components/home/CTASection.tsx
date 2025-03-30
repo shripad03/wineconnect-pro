@@ -18,7 +18,7 @@ const CTASection = () => {
               </Button>
             </Link>
             <Link to="/seller-register">
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+              <Button size="lg" variant="outline" className="border-white text-white bg-wine-900">
                 Register as Seller
               </Button>
             </Link>
