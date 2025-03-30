@@ -6,6 +6,7 @@ import FeaturedWines from '@/components/home/FeaturedWines';
 import Features from '@/components/home/Features';
 import Testimonials from '@/components/home/Testimonials';
 import CTASection from '@/components/home/CTASection';
+import BannerImage from '@/components/home/BannerImage';
 import { useQuery } from '@tanstack/react-query';
 import { wineApi, wineryApi } from '@/services/api';
 
@@ -25,6 +26,9 @@ const Index = () => {
   return (
     <Layout>
       <Hero />
+      <div className="container mx-auto px-4">
+        <BannerImage />
+      </div>
       <FeaturedWineries />
       <FeaturedWines />
       <Features />
