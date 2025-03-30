@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,7 +62,46 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				wine: {
+					50: '#fcf5f5',
+					100: '#f9e9ea',
+					200: '#f3d3d6',
+					300: '#e9afb4',
+					400: '#db7f89',
+					500: '#ca5866',
+					600: '#b73c50',
+					700: '#932a42',
+					800: '#7b2438',
+					900: '#682233',
+					950: '#3b0e1a',
+				},
+				gold: {
+					50: '#fbf8ed',
+					100: '#f3eed2',
+					200: '#e9dca6',
+					300: '#ddc570',
+					400: '#d2ae47',
+					500: '#c1972f',
+					600: '#a67824',
+					700: '#885920',
+					800: '#724821',
+					900: '#613c20',
+					950: '#381f10',
+				},
+				cream: {
+					50: '#faf8f1',
+					100: '#f5f0e1',
+					200: '#ece1c4',
+					300: '#dfca9c',
+					400: '#d0b078',
+					500: '#c69c5f',
+					600: '#bb8851',
+					700: '#9c6e42',
+					800: '#7f5839',
+					900: '#684931',
+					950: '#37251a',
+				},
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -89,7 +129,11 @@ export default {
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out'
-			}
+			},
+			fontFamily: {
+				serif: ['Playfair Display', 'serif'],
+				sans: ['Inter', 'sans-serif'],
+			},
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
